@@ -2,7 +2,7 @@ machine:
   java:
     version: oraclejdk8
   post:
-    - pwd
+    - cd retcon.address.parser
     - ls
     - gradle buildZip
     - cp build/distributions/* $CIRCLE_ARTIFACTS
