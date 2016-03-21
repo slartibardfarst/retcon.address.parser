@@ -2,6 +2,8 @@ machine:
   java:
     version: oraclejdk8
   post:
+    - pwd
+    - ls
     - gradle buildZip
     - cp build/distributions/* $CIRCLE_ARTIFACTS
 
