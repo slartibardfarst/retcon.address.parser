@@ -10,5 +10,5 @@ general:
 test:
   post:
     - ls
-    - retcon.address.parser/gradle buildZip
+    - gradle buildZip
     - cp build/distributions/* $CIRCLE_ARTIFACTS
