@@ -2,6 +2,7 @@ machine:
   java:
     version: oraclejdk8
   post:
+    - gradle buildZip
     - cp build/distributions/* $CIRCLE_ARTIFACTS
 
 general:
