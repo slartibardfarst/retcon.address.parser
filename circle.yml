@@ -1,7 +1,8 @@
 machine:
   java:
     version: oraclejdk8
-    post: cp build/distributions/* $CIRCLE_ARTIFACTS
+  post:
+    - cp build/distributions/* $CIRCLE_ARTIFACTS
 
 general:
   artifacts:
