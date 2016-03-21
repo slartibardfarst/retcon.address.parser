@@ -2,10 +2,8 @@ package retcon.parser.patterns;
 
 import retcon.parser.predicate.Predicate;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.PrintWriter;
+import java.io.*;
+import java.nio.file.*;
 import java.util.*;
 
 /**
@@ -297,10 +295,14 @@ public class PatternManager {
     public static List<Pattern> readPatternsFromFile(String filename, Map<String, Predicate> predicates) {
         List<Pattern> result = new ArrayList<>();
 
+        File file = null;
+        FileReader fr = null;
+        BufferedReader br = null;
+
         try {
-            File file = new File(filename);
-            FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
+            file = new File(filename);
+            fr = new FileReader(file);
+            br = new BufferedReader(fr);
 
             String line = null;
             while ((line = br.readLine()) != null) {
@@ -310,9 +312,32 @@ public class PatternManager {
             br.close();
         } catch (Exception ex) {
             System.out.println(ex.toString());
+        } finally {
+            try {
+                if (null != br) br.close();
+                if (null != fr) fr.close();
+            } catch(java.io.IOException ioEx){
+                System.out.println(ioEx.toString());
+            }
+
         }
 
         return result;
+    }
+
+    public static void deleteFile(String filepath)
+    {
+        try {
+            Path path = Paths.get(filepath);
+            Files.delete(path);
+        } catch (NoSuchFileException x) {
+            System.err.format("%s: no such" + " file or directory%n", filepath);
+        } catch (DirectoryNotEmptyException x) {
+            System.err.format("%s not empty%n", filepath);
+        } catch (IOException x) {
+            // File permission problems are caught here.
+            System.err.println(x);
+        }
     }
 
     public static List<Pattern>  setupPatterns(String patternsFilename)
